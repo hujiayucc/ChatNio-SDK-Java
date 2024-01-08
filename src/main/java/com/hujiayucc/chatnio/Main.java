@@ -1,6 +1,7 @@
 package com.hujiayucc.chatnio;
 
 import com.hujiayucc.chatnio.exception.AuthException;
+import com.hujiayucc.chatnio.exception.BuyException;
 import com.hujiayucc.chatnio.exception.FieldException;
 
 public class Main {
@@ -23,6 +24,8 @@ public class Main {
             System.out.println("验证失败");
         } catch (FieldException e) {
             System.out.println("字段错误");
+        } catch (BuyException e) {
+            System.out.println("余额购买失败：" + e.getMessage());
         }
     }
 }

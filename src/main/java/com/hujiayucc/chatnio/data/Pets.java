@@ -3,6 +3,7 @@ package com.hujiayucc.chatnio.data;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.hujiayucc.chatnio.exception.AuthException;
+import com.hujiayucc.chatnio.exception.BuyException;
 import com.hujiayucc.chatnio.exception.FieldException;
 import com.hujiayucc.chatnio.utils.GetClient;
 import com.hujiayucc.chatnio.utils.PostClient;
@@ -44,8 +45,9 @@ public class Pets {
      * @return 购买是否成功
      * @throws AuthException 认证失败
      * @throws FieldException 字段异常
+     * @throws BuyException 购买失败
      */
-    public boolean buy(int quota) throws AuthException, FieldException {
+    public boolean buy(int quota) throws AuthException, FieldException, BuyException {
         if (quota < 0 || quota > 99999) throw new FieldException("购买金额在 1-99999 之间");
         PostClient buy;
         try {
@@ -56,7 +58,9 @@ public class Pets {
         if (buy.statusCode() == 401) throw new AuthException("Unauthorized");
         if (buy.statusCode() == 200) {
             JSONObject buyJson = JSON.parseObject(buy.body());
-            return buyJson.getBoolean("status");
+            boolean buyStatus = buyJson.getBoolean("status");
+            if (buyStatus) return true;
+            throw new BuyException(buyJson.getString("error"));
         }
         throw new FieldException("Buy quota failed.");
     }
