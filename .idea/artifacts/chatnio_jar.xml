@@ -1,11 +1,14 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="chatnio:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/chatnio_jar</output-path>
+    <output-path>$PROJECT_DIR$/../../../..</output-path>
     <root id="archive" name="chatnio.jar">
-      <element id="module-output" name="chatnio.main" />
-      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/2.0.1/43f1c09cfaa25e13b6454fc6e3610ee092b4f748/fastjson-2.0.1.jar" path-in-jar="/" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
+      </element>
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba.fastjson2/fastjson2-extension/2.0.1/db95dac909ffc377660fd89c7cb8b3a784ff0f5b/fastjson2-extension-2.0.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba.fastjson2/fastjson2/2.0.1/b59f36309979f79f9837f3b2d80791a2f156e63d/fastjson2-2.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/fastjson/2.0.1/43f1c09cfaa25e13b6454fc6e3610ee092b4f748/fastjson-2.0.1.jar" path-in-jar="/" />
+      <element id="module-output" name="chatnio.main" />
     </root>
   </artifact>
 </component>

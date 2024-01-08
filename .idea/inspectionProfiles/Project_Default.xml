@@ -8,5 +8,11 @@
         </set>
       </option>
     </inspection_tool>
+    <inspection_tool class="MisspelledHeader" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="CUSTOM_HEADERS">
+        <header value="Build-Jdk" />
+        <header value="Built-By" />
+      </option>
+    </inspection_tool>
   </profile>
 </component>
