@@ -1,8 +1,13 @@
 package com.hujiayucc.chatnio;
 
+import com.hujiayucc.chatnio.bean.Message;
+import com.hujiayucc.chatnio.bean.Role;
+import com.hujiayucc.chatnio.bean.TaskBean;
 import com.hujiayucc.chatnio.exception.AuthException;
 import com.hujiayucc.chatnio.exception.BuyException;
 import com.hujiayucc.chatnio.exception.FieldException;
+
+import java.util.List;
 
 public class Main {
 
@@ -13,19 +18,38 @@ public class Main {
         ChatNio chatNio = new ChatNio("你的密钥");
         try {
             float quota = chatNio.Pets().getQuota();
-            boolean buy = chatNio.Pets().buy(200);
             boolean cert = chatNio.Pets().getCert();
             boolean teenager = chatNio.Pets().getTeenager();
-            System.out.println(quota);
+            System.out.println("Quota: " + quota);
+            System.out.println("Cert: " + cert);
+            System.out.println("Teenager: " + teenager);
+
+            boolean buy = chatNio.Pets().buy(200);
             System.out.println(buy);
-            System.out.println(cert);
-            System.out.println(teenager);
-        } catch (AuthException e) {
-            System.out.println("验证失败");
-        } catch (FieldException e) {
-            System.out.println("字段错误");
-        } catch (BuyException e) {
-            System.out.println("余额购买失败：" + e.getMessage());
+        } catch (AuthException | FieldException | BuyException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            // 对话数量
+            int TaskList = chatNio.Tasks().getTaskList().size();
+            for (int i = 0; i < TaskList; i++) {
+                TaskBean taskBean = chatNio.Tasks().getTaskList().get(i);
+                int id = taskBean.id();
+                int userId = taskBean.userId();
+                String name = taskBean.name();
+                List<Message> messages = taskBean.messages();
+                String model = taskBean.model();
+                boolean enableWeb = taskBean.enableWeb();
+                System.out.println("ID: " + id + ", UserID: " + userId + ", Name: " + name + ", Model, " + model + ", EnableWeb: " + enableWeb);
+                for (Message message : messages) {
+                    Role role = message.role();
+                    String content = message.content();
+                    System.out.println("Role: " + role.getRole() + ", Content: " + content);
+                }
+            }
+        } catch (FieldException | AuthException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

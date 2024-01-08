@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: com.hujiayucc.chatnio.Main
+Built-By: hujiayucc
+Created-By: Gradle 8.4
+Build-Jdk: 17

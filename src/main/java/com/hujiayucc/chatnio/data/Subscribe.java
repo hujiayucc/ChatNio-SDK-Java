@@ -12,8 +12,6 @@ import com.hujiayucc.chatnio.utils.PostClient;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static com.hujiayucc.chatnio.ChatNio.API;
-
 public class Subscribe {
     private final String key;
 
@@ -30,7 +28,7 @@ public class Subscribe {
     public boolean isSubscribed() throws AuthException, FieldException {
         GetClient client;
         try {
-            client = new GetClient(API + "/subscription", key);
+            client = new GetClient("/subscription", key);
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -50,7 +48,7 @@ public class Subscribe {
     public int expired() throws AuthException, FieldException {
         GetClient client;
         try {
-            client = new GetClient(API + "/subscription", key);
+            client = new GetClient("/subscription", key);
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +73,7 @@ public class Subscribe {
         if (level == SubLevel.Normal) throw new FieldException("订阅级别不能为 普通用户");
         PostClient client;
         try {
-            client = new PostClient(API + "/subscribe", "month=" + month + "&level=" + level.getLevel(), key);
+            client = new PostClient("/subscribe", "month=" + month + "&level=" + level.getLevel(), key);
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -2,6 +2,7 @@ package com.hujiayucc.chatnio.data;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.hujiayucc.chatnio.bean.Package;
 import com.hujiayucc.chatnio.exception.AuthException;
 import com.hujiayucc.chatnio.exception.BuyException;
 import com.hujiayucc.chatnio.exception.FieldException;
@@ -65,7 +66,7 @@ public class Pets {
         throw new FieldException("Buy quota failed.");
     }
 
-    private GetClient getPackage() {
+    private GetClient getPackageClient() {
         try {
             return new GetClient("/package", key);
         } catch (URISyntaxException | IOException | InterruptedException e) {
@@ -80,7 +81,7 @@ public class Pets {
      * @throws FieldException 字段异常
      */
     public boolean getCert() throws AuthException, FieldException {
-        GetClient cert = getPackage();
+        GetClient cert = getPackageClient();
         if (cert.statusCode() == 401) throw new AuthException("Unauthorized");
         if (cert.statusCode() == 200) {
             JSONObject certJson = JSON.parseObject(cert.body());
@@ -96,12 +97,28 @@ public class Pets {
      * @throws FieldException 字段异常
      */
     public boolean getTeenager() throws AuthException, FieldException {
-        GetClient teenager = getPackage();
+        GetClient teenager = getPackageClient();
         if (teenager.statusCode() == 401) throw new AuthException("Unauthorized");
         if (teenager.statusCode() == 200) {
             JSONObject certJson = JSON.parseObject(teenager.body());
             return certJson.getJSONObject("data").getBoolean("teenager");
         }
         throw new FieldException("Get teenager failed.");
+    }
+
+    /**
+     * 查询礼包
+     * @return 礼包信息
+     * @throws AuthException 认证失败
+     * @throws FieldException 字段异常
+     */
+    public Package getPackage() throws AuthException, FieldException {
+        GetClient packageClient = getPackageClient();
+        if (packageClient.statusCode() == 401) throw new AuthException("Unauthorized");
+        if (packageClient.statusCode() == 200) {
+            JSONObject data = JSON.parseObject(packageClient.body()).getJSONObject("data");
+            return new Package(data.getBoolean("cert"), data.getBoolean("teenager"));
+        }
+        throw new FieldException("Get package failed.");
     }
 }
