@@ -58,7 +58,7 @@ public class Pets {
             JSONObject buyJson = JSON.parseObject(buy.body());
             return buyJson.getBoolean("status");
         }
-        throw new FieldException("Buy failed.");
+        throw new FieldException("Buy quota failed.");
     }
 
     private GetClient getPackage() {
@@ -98,6 +98,6 @@ public class Pets {
             JSONObject certJson = JSON.parseObject(teenager.body());
             return certJson.getJSONObject("data").getBoolean("teenager");
         }
-        throw new FieldException("Get cert failed.");
+        throw new FieldException("Get teenager failed.");
     }
 }
