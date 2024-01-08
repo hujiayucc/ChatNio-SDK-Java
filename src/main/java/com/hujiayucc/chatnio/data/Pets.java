@@ -48,7 +48,7 @@ public class Pets {
      * @throws BuyException 购买失败
      */
     public boolean buy(int quota) throws AuthException, FieldException, BuyException {
-        if (quota < 0 || quota > 99999) throw new FieldException("购买金额在 1-99999 之间");
+        if (quota < 1 || quota > 99999) throw new FieldException("购买金额在 1-99999 之间");
         PostClient buy;
         try {
             buy = new PostClient("/buy", "quota=" + quota, key);
