@@ -55,7 +55,7 @@ public record TaskBean(int id, int userId, String name, List<Message> messages, 
     }
 
     /**
-     * 是否开启web端
+     * 是否开启联网搜索
      *
      * @return enableWeb
      */

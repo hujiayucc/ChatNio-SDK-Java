@@ -1,6 +1,7 @@
 package com.hujiayucc.chatnio;
 
 import com.hujiayucc.chatnio.bean.Message;
+import com.hujiayucc.chatnio.bean.Models;
 import com.hujiayucc.chatnio.bean.Role;
 import com.hujiayucc.chatnio.bean.TaskBean;
 import com.hujiayucc.chatnio.exception.AuthException;
@@ -20,9 +21,7 @@ public class Main {
             float quota = chatNio.Pets().getQuota();
             boolean cert = chatNio.Pets().getCert();
             boolean teenager = chatNio.Pets().getTeenager();
-            System.out.println("Quota: " + quota);
-            System.out.println("Cert: " + cert);
-            System.out.println("Teenager: " + teenager);
+            System.out.println("Quota: " + quota + " Cert: " + cert + " Teenager: " + teenager);
 
             boolean buy = chatNio.Pets().buy(200);
             System.out.println(buy);
@@ -51,5 +50,14 @@ public class Main {
         } catch (FieldException | AuthException e) {
             System.out.println(e.getMessage());
         }
+
+        Models models = chatNio.Models();
+
+        for (String name : models.getAll()) {
+            System.out.println(name);
+        }
+
+        System.out.println("There are a total of " + models.getSize() + " Models");
+        System.out.println("Default Model: " + Models.getDefault());
     }
 }
