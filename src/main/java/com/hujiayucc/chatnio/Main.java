@@ -4,6 +4,7 @@ import com.hujiayucc.chatnio.bean.Message;
 import com.hujiayucc.chatnio.bean.Models;
 import com.hujiayucc.chatnio.bean.Role;
 import com.hujiayucc.chatnio.bean.TaskBean;
+import com.hujiayucc.chatnio.enums.SubLevel;
 import com.hujiayucc.chatnio.exception.AuthException;
 import com.hujiayucc.chatnio.exception.BuyException;
 import com.hujiayucc.chatnio.exception.FieldException;
@@ -48,6 +49,15 @@ public class Main {
                 }
             }
         } catch (FieldException | AuthException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            boolean isSubscribe = chatNio.Subscribe().isSubscribed();
+            System.out.println("isSubscribe: " + isSubscribe);
+            boolean subscribe = chatNio.Subscribe().subscribe(1, SubLevel.Basic);
+            System.out.println("subscribe: " + subscribe);
+        } catch (AuthException | FieldException | BuyException e) {
             System.out.println(e.getMessage());
         }
 
