@@ -27,8 +27,8 @@ tasks.test {
 tasks.jar {
     from(configurations.runtimeClasspath.get().filter { it.name.endsWith(".jar") }.map { zipTree(it) })
     manifest {
-        val jdkVersion = org.gradle.api.JavaVersion.current()
-        val javaVersion = jdkVersion.majorVersion.toString()
+        val jdkVersion = JavaVersion.current()
+        val javaVersion = jdkVersion.majorVersion
         val gradleVersion = project.gradle.gradleVersion
 
         attributes(
@@ -36,7 +36,7 @@ tasks.jar {
                 "Main-Class" to "com.hujiayucc.chatnio.Main",
                 "Implementation-Version" to version,
                 "Built-By" to "hujiayucc",
-                "Built-Date" to SimpleDateFormat("yyyy-MM-dd").format(Date()),
+                "Built-Date" to SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(Date()),
                 "JDK-Version" to jdkVersion.toString(),
                 "Java-Version" to javaVersion,
                 "Gradle-Version" to gradleVersion

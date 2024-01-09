@@ -11,6 +11,8 @@ import com.hujiayucc.chatnio.utils.PostClient;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Pets {
     private final String key;
@@ -52,7 +54,9 @@ public class Pets {
         if (quota < 1 || quota > 99999) throw new FieldException("购买金额在 1-99999 之间");
         PostClient buy;
         try {
-            buy = new PostClient("/buy", "quota=" + quota, key);
+            Map<String, Object> map = new TreeMap<>();
+            map.put("quota", quota);
+            buy = new PostClient("/buy", map, key);
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new FieldException("Buy failed.", e);
         }

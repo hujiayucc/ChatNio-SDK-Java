@@ -11,6 +11,8 @@ import com.hujiayucc.chatnio.utils.PostClient;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Subscribe {
     private final String key;
@@ -73,7 +75,10 @@ public class Subscribe {
         if (level == SubLevel.Normal) throw new FieldException("订阅级别不能为 普通用户");
         PostClient client;
         try {
-            client = new PostClient("/subscribe", "month=" + month + "&level=" + level.getLevel(), key);
+            Map<String, Object> map = new TreeMap<>();
+            map.put("month", month);
+            map.put("level", level.getLevel());
+            client = new PostClient("/subscribe", map, key);
         } catch (URISyntaxException | IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
