@@ -12,7 +12,7 @@ ChatNio chatNio = new ChatNio(key);
 ```
 
 ## 三、余额
-[相关API 文档](https://docs.chatnio.net/kai-fa-zhe-zi-yuan/api-reference/pets]
+[相关API](https://docs.chatnio.net/kai-fa-zhe-zi-yuan/api-reference/pets]
 
 ```java
 float quota = chatNio.Pets().getQuota();
@@ -27,6 +27,8 @@ boolean buy = chatNio.Pets().buy(200);
 ```
 
 ## 四、对话
+[相关API](https://docs.chatnio.net/kai-fa-zhe-zi-yuan/api-reference/dui-hua)
+
 SDK 提供了一个便捷的对话查询方法：
 
 ```java
@@ -36,6 +38,8 @@ int taskListSize = chatNio.Tasks().getTaskList().size();
 这将返回一个`TaskBean`对象的列表，你可以通过这些`TaskBean`对象获取例如任务的`id`、`userId`、`name`、`model`、`enableWeb`等信息，并且获取任务的`Message`消息列表。
 
 ## 五、订阅和礼包
+[相关API](https://docs.chatnio.net/kai-fa-zhe-zi-yuan/api-reference/ding-yue-he-li-bao)
+
 你可以使用SDK提供的方法查询订阅状态，购买订阅和续费等操作
 
 ```java
@@ -44,6 +48,8 @@ boolean subscribe = chatNio.Subscribe().subscribe(1, SubLevel.Standard);
 ```
 
 ## 六、模型
+[相关API](https://api.chatnio.net/v1/models)
+
 SDK 提供了批量获取所有模型的方法：
 
 ```java
@@ -54,6 +60,8 @@ for (String name : models.getAll()) {
 ```
 
 ## 七、聊天
+[相关API](https://docs.chatnio.net/kai-fa-zhe-zi-yuan/api-reference/liao-tian)
+
 使用 SDK，你可以选择同步方式或异步方式进行消息发送。其中，`Token`对象用于指定用户或密钥和对话id，也可以设置为匿名或新对话。
 
 ### 1. 同步方式
