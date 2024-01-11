@@ -1,15 +1,14 @@
 package com.hujiayucc.chatnio;
 
-import com.hujiayucc.chatnio.bean.Message;
-import com.hujiayucc.chatnio.bean.Models;
-import com.hujiayucc.chatnio.bean.Role;
-import com.hujiayucc.chatnio.bean.TaskBean;
+import com.hujiayucc.chatnio.bean.*;
+import com.hujiayucc.chatnio.data.Chat;
 import com.hujiayucc.chatnio.enums.SubLevel;
 import com.hujiayucc.chatnio.exception.AuthException;
 import com.hujiayucc.chatnio.exception.BuyException;
 import com.hujiayucc.chatnio.exception.FieldException;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class Main {
 
@@ -17,7 +16,8 @@ public class Main {
      * 以下只是一个简单的示例
      */
     public static void main(String[] args) {
-        ChatNio chatNio = new ChatNio("你的密钥");
+        String key = "你的密钥";
+        ChatNio chatNio = new ChatNio(key);
         try {
             float quota = chatNio.Pets().getQuota();
             boolean cert = chatNio.Pets().getCert();
@@ -55,7 +55,7 @@ public class Main {
         try {
             boolean isSubscribe = chatNio.Subscribe().isSubscribed();
             System.out.println("isSubscribe: " + isSubscribe);
-            boolean subscribe = chatNio.Subscribe().subscribe(1, SubLevel.Basic);
+            boolean subscribe = chatNio.Subscribe().subscribe(1, SubLevel.Standard);
             System.out.println("subscribe: " + subscribe);
         } catch (AuthException | FieldException | BuyException e) {
             System.out.println(e.getMessage());
@@ -69,5 +69,21 @@ public class Main {
 
         System.out.println("There are a total of " + models.getSize() + " Models");
         System.out.println("Default Model: " + Models.getDefault());
+
+        try {
+            // Token token = new Token(Token.Anonymous, Token.NewTaskId);
+            Token token = new Token(key, Token.NewTaskId);
+            Chat chat = new Chat(token);
+            CompletableFuture<MessageSegment> message = chat.send("Hello World", Models.getDefault(), false);
+            message.thenApply(result -> {
+                if (!result.end) System.out.println(result.message);
+                else System.out.println(result.message);
+                return null;
+            });
+            message.join();
+            System.out.println("Message: " + chat.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
