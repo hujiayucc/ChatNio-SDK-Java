@@ -1,5 +1,7 @@
 package com.hujiayucc.chatnio.bean;
 
+import com.alibaba.fastjson2.JSONObject;
+
 public class MessageSegment {
     public String message;
     public String keyword;
@@ -20,5 +22,14 @@ public class MessageSegment {
 
     public boolean isEnd() {
         return end;
+    }
+
+    public String toString() {
+        return new JSONObject()
+                .fluentPut("message", message)
+                .fluentPut("keyword", keyword)
+                .fluentPut("quota", quota)
+                .fluentPut("end", end)
+                .toJSONString();
     }
 }

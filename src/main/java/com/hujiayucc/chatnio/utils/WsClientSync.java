@@ -14,8 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static com.hujiayucc.chatnio.ChatNio.API;
 
-public class WsClient {
-
+public class WsClientSync {
     protected WebSocket webSocket;
     protected Token token;
     private final Queue<CompletableFuture<MessageSegment>> pendingMessages = new LinkedBlockingQueue<>();
@@ -54,25 +53,34 @@ public class WsClient {
     }
 
     // 创建新的 WebSocket 连接
-    public WsClient(Token token) {
+    public WsClientSync(Token token) {
         this.token = token;
         HttpClient client = HttpClient.newHttpClient();
         this.webSocket = client.newWebSocketBuilder()
                 .buildAsync(URI.create(getPath()), new CustomListener()).join();
     }
-
-    // 发送一条文本消息
-    public CompletableFuture<MessageSegment> sendMessage(String message, String model, boolean enableWeb) {
+    private String getBody(String message, String model, boolean enableWeb) {
         JSONObject body = new JSONObject()
-                .fluentPut("type", "chat")
-                .fluentPut("model", model)
-                .fluentPut("message", message)
-                .fluentPut("web", enableWeb);
-
+               .fluentPut("type", "chat")
+               .fluentPut("model", model)
+               .fluentPut("message", message)
+               .fluentPut("web", enableWeb);
+        return body.toJSONString();
+    }
+    public CompletableFuture<MessageSegment> sendMessageAsync(String message, String model, boolean enableWeb) {
+        String body = getBody(message, model, enableWeb);
         CompletableFuture<MessageSegment> futureResponse = new CompletableFuture<>();
         pendingMessages.add(futureResponse);
-        webSocket.sendText(body.toJSONString(), true);
+        webSocket.sendText(body, true);
         return futureResponse;
+    }
+
+    public Queue<CompletableFuture<MessageSegment>> sendMessage(String message, String model, boolean enableWeb) {
+        String body = getBody(message, model, enableWeb);
+        CompletableFuture<MessageSegment> futureResponse = new CompletableFuture<>();
+        pendingMessages.add(futureResponse);
+        webSocket.sendText(body,true);
+        return pendingMessages;
     }
 
     private String getPath() {

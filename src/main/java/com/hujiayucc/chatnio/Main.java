@@ -1,14 +1,18 @@
 package com.hujiayucc.chatnio;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hujiayucc.chatnio.bean.*;
-import com.hujiayucc.chatnio.data.Chat;
+import com.hujiayucc.chatnio.data.ChatAsync;
+import com.hujiayucc.chatnio.data.ChatSync;
 import com.hujiayucc.chatnio.enums.SubLevel;
 import com.hujiayucc.chatnio.exception.AuthException;
 import com.hujiayucc.chatnio.exception.BuyException;
 import com.hujiayucc.chatnio.exception.FieldException;
 
+import java.net.http.WebSocket;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 public class Main {
 
@@ -70,18 +74,36 @@ public class Main {
         System.out.println("There are a total of " + models.getSize() + " Models");
         System.out.println("Default Model: " + Models.getDefault());
 
+        Token token = new Token(Token.Anonymous, Token.NewTaskId);
+        // Token token = new Token(key, Token.NewTaskId);
+
+        // 同步
         try {
-            // Token token = new Token(Token.Anonymous, Token.NewTaskId);
-            Token token = new Token(key, Token.NewTaskId);
-            Chat chat = new Chat(token);
-            CompletableFuture<MessageSegment> message = chat.send("Hello World", Models.getDefault(), false);
-            message.thenApply(result -> {
-                if (!result.end) System.out.println(result.message);
-                else System.out.println(result.message);
-                return null;
-            });
+            ChatSync chat = new ChatSync(token);
+            CompletableFuture<MessageSegment> message = chat.send("SpringBoot如何使用切片，请给出相关文档以及注释",
+                    Models.getDefault(), false);
             message.join();
             System.out.println("Message: " + chat.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        // 异步
+        try {
+            ChatAsync chatAsync = new ChatAsync(token) {
+                @Override
+                public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
+                    MessageSegment message = JSONObject.parseObject(data.toString(), MessageSegment.class);
+                    if (!message.isEnd()) {
+                        System.out.print(message.getMessage());
+                    } else {
+                        System.out.println(message.getMessage());
+                    }
+                    return super.onText(webSocket, data, last);
+                }
+            };
+            chatAsync.send("Android Handler Looper 工作原理", Models.getDefault(), false).join();
+            System.out.println("Message: " + chatAsync.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

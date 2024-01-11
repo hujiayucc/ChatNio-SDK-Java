@@ -2,19 +2,23 @@ package com.hujiayucc.chatnio.data;
 
 import com.hujiayucc.chatnio.bean.MessageSegment;
 import com.hujiayucc.chatnio.bean.Token;
-import com.hujiayucc.chatnio.utils.WsClient;
+import com.hujiayucc.chatnio.utils.WsClientSync;
 
 import java.util.concurrent.CompletableFuture;
 
-public class Chat {
-    private final WsClient wsClient;
+public class ChatSync {
+    private final WsClientSync wsClient;
 
-    public Chat(Token token) {
-        wsClient = new WsClient(token);
+    /**
+     * 同步
+     * @param token token
+     */
+    public ChatSync(Token token) {
+        wsClient = new WsClientSync(token);
     }
 
     public CompletableFuture<MessageSegment> send(String message, String model, boolean enableWeb) {
-        return wsClient.sendMessage(message, model, enableWeb);
+        return wsClient.sendMessageAsync(message, model, enableWeb);
     }
 
     public String getMessage() {
