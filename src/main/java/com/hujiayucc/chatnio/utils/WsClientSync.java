@@ -14,10 +14,22 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static com.hujiayucc.chatnio.ChatNio.API;
 
+/**
+ * WS
+ */
 public class WsClientSync {
+    /**
+     * WS
+     */
     protected WebSocket webSocket;
+    /**
+     * Token信息
+     */
     protected Token token;
     private final Queue<CompletableFuture<MessageSegment>> pendingMessages = new LinkedBlockingQueue<>();
+    /**
+     * MessageStringBuilder
+     */
     public final StringBuilder builder = new StringBuilder();
 
     private class CustomListener implements WebSocket.Listener {
@@ -52,7 +64,10 @@ public class WsClientSync {
         }
     }
 
-    // 创建新的 WebSocket 连接
+    /**
+     * 创建WS连接
+     * @param token Token信息
+     */
     public WsClientSync(Token token) {
         this.token = token;
         HttpClient client = HttpClient.newHttpClient();
@@ -67,20 +82,20 @@ public class WsClientSync {
                .fluentPut("web", enableWeb);
         return body.toJSONString();
     }
+
+    /**
+     * 发送消息
+     * @param message 消息内容
+     * @param model 模型
+     * @param enableWeb 是否开启WEB
+     * @return 同步回调 {@link CompletableFuture}
+     */
     public CompletableFuture<MessageSegment> sendMessageAsync(String message, String model, boolean enableWeb) {
         String body = getBody(message, model, enableWeb);
         CompletableFuture<MessageSegment> futureResponse = new CompletableFuture<>();
         pendingMessages.add(futureResponse);
         webSocket.sendText(body, true);
         return futureResponse;
-    }
-
-    public Queue<CompletableFuture<MessageSegment>> sendMessage(String message, String model, boolean enableWeb) {
-        String body = getBody(message, model, enableWeb);
-        CompletableFuture<MessageSegment> futureResponse = new CompletableFuture<>();
-        pendingMessages.add(futureResponse);
-        webSocket.sendText(body,true);
-        return pendingMessages;
     }
 
     private String getPath() {

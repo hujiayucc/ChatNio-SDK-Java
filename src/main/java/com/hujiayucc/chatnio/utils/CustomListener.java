@@ -10,15 +10,29 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * 自定义WS监听器
+ */
 public class CustomListener implements WebSocket.Listener {
+    /** messageStringBuilder */
     public final StringBuilder builder = new StringBuilder();
+    /** ws */
     public final Queue<CompletableFuture<MessageSegment>> pendingMessages = new LinkedBlockingQueue<>();
+    /** Token信息 */
     public final Token token;
 
+    /**
+     * 自定义WS监听器
+     * @param token Token信息
+     */
     public CustomListener(Token token) {
         this.token = token;
     }
 
+    /**
+     * 开启连接
+     * @param webSocket ws
+     */
     @Override
     public void onOpen(WebSocket webSocket) {
         JSONObject body = new JSONObject().fluentPut("token", token.toString());

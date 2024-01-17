@@ -2,6 +2,9 @@ package com.hujiayucc.chatnio.bean;
 
 import java.util.List;
 
+/**
+ * 对话Bean
+ */
 public record TaskBean(int id, int userId, String name, List<Message> messages, String model, boolean enableWeb) {
 
     /**

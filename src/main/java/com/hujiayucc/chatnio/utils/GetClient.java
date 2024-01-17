@@ -9,12 +9,19 @@ import java.net.http.HttpResponse;
 
 import static com.hujiayucc.chatnio.ChatNio.API;
 
+/**
+ * GET请求
+ */
 public class GetClient {
     private final HttpResponse<String> response;
 
     /**
      * GET请求
-     * @param url 请求URL
+     * @param url 请求url
+     * @param key key
+     * @throws URISyntaxException {@link URISyntaxException}
+     * @throws IOException {@link IOException}
+     * @throws InterruptedException {@link InterruptedException}
      */
     public GetClient(String url, String key) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -28,10 +35,18 @@ public class GetClient {
         response = client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
+    /**
+     * GET请求返回内容
+     * @return GET数据
+     */
     public String body() {
         return response.body();
     }
 
+    /**
+     * 请求状态码
+     * @return 状态码
+     */
     public int statusCode() {
         return response.statusCode();
     }

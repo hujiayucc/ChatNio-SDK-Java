@@ -16,10 +16,16 @@ import java.util.List;
 
 import static com.hujiayucc.chatnio.bean.Role.getRole;
 
+/**
+ * 对话
+ */
 public class Tasks {
     private final String key;
 
-    /** 对话 */
+    /**
+     * 对话
+     * @param key key
+     */
     public Tasks(String key) {
         this.key = key;
     }

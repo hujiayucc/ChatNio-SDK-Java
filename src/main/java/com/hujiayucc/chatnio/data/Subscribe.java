@@ -14,9 +14,16 @@ import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * 订阅
+ */
 public class Subscribe {
     private final String key;
 
+    /**
+     * 订阅
+     * @param key key
+     */
     public Subscribe(String key) {
         this.key = key;
     }

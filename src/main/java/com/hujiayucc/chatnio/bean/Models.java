@@ -5,6 +5,9 @@ import com.hujiayucc.chatnio.utils.GetClient;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+/**
+ * 模型
+ */
 public class Models {
     private final String[] MODELS;
 

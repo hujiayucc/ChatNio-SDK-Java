@@ -14,8 +14,16 @@ import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * 余额
+ */
 public class Pets {
     private final String key;
+
+    /**
+     * 余额
+     * @param key key
+     */
     public Pets(String key) {
         this.key = key;
     }

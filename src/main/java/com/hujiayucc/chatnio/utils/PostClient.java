@@ -12,12 +12,20 @@ import java.util.Map;
 
 import static com.hujiayucc.chatnio.ChatNio.API;
 
+/**
+ * POST请求
+ */
 public class PostClient {
     private final HttpResponse<String> response;
 
     /**
      * POST请求
      * @param url 请求URL
+     * @param requestBody request
+     * @param key key
+     * @throws URISyntaxException {@link URISyntaxException}
+     * @throws IOException {@link IOException}
+     * @throws InterruptedException {@link InterruptedException}
      */
     public PostClient(String url, Map<String, Object> requestBody, String key) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -31,10 +39,18 @@ public class PostClient {
         response = client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
+    /**
+     * 返回内容
+     * @return 返回内容
+     */
     public String body() {
         return response.body();
     }
 
+    /**
+     * 状态码
+     * @return 状态码
+     */
     public int statusCode() {
         return response.statusCode();
     }

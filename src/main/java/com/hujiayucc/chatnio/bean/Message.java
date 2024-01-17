@@ -1,5 +1,10 @@
 package com.hujiayucc.chatnio.bean;
 
+/**
+ * 消息
+ * @param role 角色 {@link Role}
+ * @param content 对话内容 {@link String}
+ */
 public record Message(Role role, String content) {
 
     /**

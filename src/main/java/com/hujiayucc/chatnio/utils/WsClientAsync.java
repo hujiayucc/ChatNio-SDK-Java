@@ -11,12 +11,28 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.hujiayucc.chatnio.ChatNio.API;
 
+/**
+ * WS
+ */
 public class WsClientAsync {
+    /**
+     * WS
+     */
     protected WebSocket webSocket;
+    /**
+     * Token信息
+     */
     protected Token token;
+    /**
+     * 自定义监听器
+     */
     protected CustomListener listener;
 
-    // 创建新的 WebSocket 连接
+    /**
+     * 创建WS连接
+     * @param token Token信息
+     * @param listener 监听器
+     */
     public WsClientAsync(Token token, CustomListener listener) {
         this.token = token;
         this.listener = listener;
@@ -33,6 +49,13 @@ public class WsClientAsync {
         return body.toJSONString();
     }
 
+    /**
+     * 发送消息
+     * @param message 消息内容
+     * @param model 模型
+     * @param enableWeb 是否开启WEB
+     * @return 异步回调 {@link CompletableFuture}
+     */
     public CompletableFuture<MessageSegment> sendMessage(String message, String model, boolean enableWeb) {
         String body = getBody(message, model, enableWeb);
         CompletableFuture<MessageSegment> futureResponse = new CompletableFuture<>();

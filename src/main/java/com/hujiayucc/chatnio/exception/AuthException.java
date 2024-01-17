@@ -5,16 +5,12 @@ package com.hujiayucc.chatnio.exception;
  * Unauthorized
  * 认证失败
  */
-public class AuthException extends Exception{
+public class AuthException extends Exception {
+    /**
+     * 验证失败错误
+     * @param message 服务器返回内容
+     */
     public AuthException(String message) {
         super(message);
-    }
-
-    public AuthException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public AuthException(Throwable cause) {
-        super(cause);
     }
 }

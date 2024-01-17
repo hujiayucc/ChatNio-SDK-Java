@@ -2,18 +2,23 @@ package com.hujiayucc.chatnio.bean;
 
 import com.alibaba.fastjson2.JSONObject;
 
+/**
+ * Token信息
+ */
 public class Token {
     /**
      * 匿名 Token
      * @param id 对话ID, -1 为新对话
+     * @return 匿名Token
      */
     public static Token Anonymous(int id) {
         return new Token("anonymous", id);
     }
 
     /**
-     * 匿名 Token
+     * 匿名Token
      * @param task 对话
+     * @return 匿名Token
      */
     public static Token Anonymous(TaskBean task) {
         return new Token("anonymous", task.id());
