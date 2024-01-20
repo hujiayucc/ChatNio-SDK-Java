@@ -4,6 +4,17 @@
 为 [ChatNio](https://chatnio.net/) 提供的Java平台SDK
 
 ## 二、快速开始
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.github.hujiayucc:chatnio:1.0.2")
+}
+```
+
 在开始使用 SDK 之前，你需要首先生成一个`ChatNio`实例，这需要提供一个由`ChatNio`服务提供的密钥：
 
 ```java
