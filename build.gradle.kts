@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "io.github.hujiayucc"
-version = "1.0.2"
+version = "1.0.3"
 
 val groupId = group
 val artifactId = rootProject.name
